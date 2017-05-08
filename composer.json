@@ -1,0 +1,26 @@
+{
+  "name": "geniv/nette-locale",
+  "description": "Locale extension for Nette Framework",
+  "keywords": [
+    "nette",
+    "locale",
+    "geniv"
+  ],
+  "license": "GPL-3.0",
+  "authors": [
+    {
+      "name": "Radek Fryšták",
+      "email": "geniv.radek@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.6.0",
+    "nette/nette": ">=2.4.0",
+    "dibi/dibi": ">=3.0.0"
+  },
+  "autoload": {
+    "classmap": [
+      "src/"
+    ]
+  }
+}
