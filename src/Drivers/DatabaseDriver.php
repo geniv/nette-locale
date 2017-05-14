@@ -24,11 +24,11 @@ class DatabaseDriver extends Locale
      * DatabaseDriver constructor.
      *
      * @param array      $parameters
-     * @param Connection $database
+     * @param Connection $connection
      * @param IStorage   $cacheStorage
      * @throws Exception
      */
-    public function __construct(array $parameters, Connection $database, IStorage $cacheStorage)
+    public function __construct(array $parameters, Connection $connection, IStorage $cacheStorage)
     {
         $cache = new Cache($cacheStorage, 'cache' . __CLASS__);
 
@@ -43,7 +43,7 @@ class DatabaseDriver extends Locale
         $locales = $cache->load('locales');
         if ($locales === null) {
             // nacteni vsech jazyku do pole
-            $locales = $database->select('id, code, name, plural, main')
+            $locales = $connection->select('id, code, name, plural, main')
                 ->from($tableLocale)
                 ->where('active=%b', true)
                 ->orderBy('id')->asc()
@@ -68,7 +68,7 @@ class DatabaseDriver extends Locale
         $localeAlias = $cache->load('localeAlias');
         if ($localeAlias === null) {
             // nacitani aliasu
-            $localeAlias = $database->select('a.alias, l.code')
+            $localeAlias = $connection->select('a.alias, l.code')
                 ->from($tableLocale . '_alias')->as('a')
                 ->join($tableLocale)->as('l')->on('l.id=a.id_locale')
                 ->fetchPairs('alias', 'code');
