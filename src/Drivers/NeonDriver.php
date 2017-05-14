@@ -2,7 +2,7 @@
 
 namespace Locale\Drivers;
 
-use Locale;
+use Locale\Locale;
 use Nette\Caching\Cache;
 use Nette\Caching\IStorage;
 

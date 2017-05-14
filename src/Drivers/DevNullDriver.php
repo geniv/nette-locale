@@ -2,7 +2,7 @@
 
 namespace Locale\Drivers;
 
-use Locale;
+use Locale\Locale;
 
 
 /**
