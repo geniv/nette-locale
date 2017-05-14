@@ -1,25 +1,25 @@
 <?php
 
-namespace LocaleServices\Drivers;
+namespace Locale\Drivers;
 
-use LocaleServices\LocaleService;
+use Locale\Locale;
 use Nette\Caching\Cache;
 use Nette\Caching\IStorage;
 
 
 /**
- * Class Neon
+ * Class NeonDriver
  *
  * jazykova sluzba se statickym nastavenim pro STATICKE preklady, pro pevne definovane jazyky
  *
  * @author  geniv
- * @package LocaleServices\Drivers
+ * @package Locale\Drivers
  */
-class Neon extends LocaleService
+class NeonDriver extends Locale
 {
 
     /**
-     * Neon constructor.
+     * NeonDriver constructor.
      *
      * @param array    $parameters
      * @param IStorage $cacheStorage

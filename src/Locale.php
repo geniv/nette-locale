@@ -1,6 +1,6 @@
 <?php
 
-namespace LocaleServices;
+namespace Locale;
 
 use Nette\Application\Application;
 use Nette\Application\Request;
@@ -8,12 +8,12 @@ use Nette\SmartObject;
 
 
 /**
- * Class LanguageService
+ * Class Locale
  *
  * @author  geniv
- * @package LanguageServices
+ * @package Locale
  */
-class LocaleService
+class Locale
 {
     use SmartObject;
 
@@ -28,7 +28,7 @@ class LocaleService
 
 
     /**
-     * LocaleService constructor.
+     * Locale constructor.
      *
      * @param      $defaultLocale
      * @param      $locales
@@ -46,7 +46,7 @@ class LocaleService
 
 
     /**
-     * nacitani jazyku z http requestu
+     * Get current locale from HttpRequest.
      *
      * @param Application $sender
      * @param Request     $request
@@ -59,7 +59,7 @@ class LocaleService
 
 
     /**
-     * nacteni seznamu jmen jazyku
+     * Get list name locales.
      *
      * @return array
      */
@@ -75,7 +75,7 @@ class LocaleService
 
 
     /**
-     * nacteno seznamu id jazyku
+     * Get list id locales.
      *
      * @return array
      */
@@ -91,7 +91,7 @@ class LocaleService
 
 
     /**
-     * nacteni pole jazyku
+     * Get list locales.
      *
      * @return array
      */
@@ -102,9 +102,9 @@ class LocaleService
 
 
     /**
-     * interni kontrola vybraneho jazyka a aplikace aliasu
+     * Internal check curent locale with apply alias.
      */
-    private function checkLanguage()
+    private function checkLocale()
     {
         if (!isset($this->locales[$this->selectLocale])) {
             // pokud neexistuje jazky hleda v aliasech
@@ -118,21 +118,21 @@ class LocaleService
 
 
     /**
-     * nacteni aktualniho jazyka
+     * Get current code locale.
      *
      * @param bool $upper
      * @return mixed
      */
     public function getCode($upper = false)
     {
-        $this->checkLanguage();
+        $this->checkLocale();
         $code = $this->locales[$this->selectLocale]['code'];
         return ($upper ? strtoupper($code) : $code);
     }
 
 
     /**
-     * nastaveni aktualniho jazyka
+     * Set current code locale.
      *
      * @param $code
      */
@@ -140,13 +140,13 @@ class LocaleService
     {
         if ($code) {
             $this->selectLocale = strtolower($code);
-            $this->checkLanguage();
+            $this->checkLocale();
         }
     }
 
 
     /**
-     * nacteni id aktualniho jazyka
+     * Get current id locale.
      *
      * @return mixed
      */
@@ -157,7 +157,7 @@ class LocaleService
 
 
     /**
-     * nacteni id hlavniho jazyka
+     * Get default id locale.
      *
      * @return null
      */
@@ -168,7 +168,7 @@ class LocaleService
 
 
     /**
-     * nacte kod hlavniho jazyku
+     * Get default code locale.
      *
      * @param bool $upper
      * @return string
@@ -180,7 +180,18 @@ class LocaleService
 
 
     /**
-     * nacteni pluralu jazyka
+     * Is default locale?
+     *
+     * @return bool
+     */
+    public function isDefaultLocale()
+    {
+        return $this->getIdDefault() == $this->getId();
+    }
+
+
+    /**
+     * Get prulral locale.
      *
      * @return mixed
      */
@@ -191,7 +202,7 @@ class LocaleService
 
 
     /**
-     * nacita id jazyka podle kodu
+     * Get id locale id by code locale.
      *
      * @param $code
      * @return mixed
