@@ -1,6 +1,6 @@
 <?php
 
-namespace LocaleServices;
+namespace Locale;
 
 use Nette\Application\Application;
 use Nette\Application\Request;
@@ -8,12 +8,12 @@ use Nette\SmartObject;
 
 
 /**
- * Class LanguageService
+ * Class Locale
  *
  * @author  geniv
- * @package LanguageServices
+ * @package Locale
  */
-class LocaleService
+class Locale
 {
     use SmartObject;
 
@@ -28,7 +28,7 @@ class LocaleService
 
 
     /**
-     * LocaleService constructor.
+     * Locale constructor.
      *
      * @param      $defaultLocale
      * @param      $locales
@@ -104,7 +104,7 @@ class LocaleService
     /**
      * Internal check curent locale with apply alias.
      */
-    private function checkLanguage()
+    private function checkLocale()
     {
         if (!isset($this->locales[$this->selectLocale])) {
             // pokud neexistuje jazky hleda v aliasech
@@ -125,7 +125,7 @@ class LocaleService
      */
     public function getCode($upper = false)
     {
-        $this->checkLanguage();
+        $this->checkLocale();
         $code = $this->locales[$this->selectLocale]['code'];
         return ($upper ? strtoupper($code) : $code);
     }
@@ -140,7 +140,7 @@ class LocaleService
     {
         if ($code) {
             $this->selectLocale = strtolower($code);
-            $this->checkLanguage();
+            $this->checkLocale();
         }
     }
 

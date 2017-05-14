@@ -1,6 +1,6 @@
 <?php
 
-namespace LocaleServices\Bridges\Nette;
+namespace Locale\Bridges\Nette;
 
 use Nette;
 use Nette\DI\CompilerExtension;
@@ -12,7 +12,7 @@ use Nette\DI\CompilerExtension;
  * nette extension pro zavadeni jazykove sluzby jako rozsireni
  *
  * @author  geniv
- * @package LocaleServices\Bridges\Nette
+ * @package Locale\Bridges\Nette
  */
 class Extension extends CompilerExtension
 {
@@ -27,20 +27,20 @@ class Extension extends CompilerExtension
 
         switch ($config['source']) {
             case 'DevNull':
-                $localeService = $builder->addDefinition($this->prefix('default'))
-                    ->setClass('LocaleServices\Drivers\DevNull')
+                $locale = $builder->addDefinition($this->prefix('default'))
+                    ->setClass('Locale\Drivers\DevNullDriver')
                     ->setInject(false);
                 break;
 
             case 'Database':
-                $localeService = $builder->addDefinition($this->prefix('default'))
-                    ->setClass('LocaleServices\Drivers\Database', [$config['parameters']])
+                $locale = $builder->addDefinition($this->prefix('default'))
+                    ->setClass('Locale\Drivers\DatabaseDriver', [$config['parameters']])
                     ->setInject(false);
                 break;
 
             case 'Neon':
-                $localeService = $builder->addDefinition($this->prefix('default'))
-                    ->setClass('LocaleServices\Drivers\Neon', [$config['parameters']])
+                $locale = $builder->addDefinition($this->prefix('default'))
+                    ->setClass('Locale\Drivers\NeonDriver', [$config['parameters']])
                     ->setInject(false);
                 break;
         }
@@ -48,9 +48,9 @@ class Extension extends CompilerExtension
         // pokud je debugmod a existuje rozhranni tak aktivuje panel
         if ($builder->parameters['debugMode'] && interface_exists('Tracy\IBarPanel')) {
             $builder->addDefinition($this->prefix('panel'))
-                ->setClass('LocaleServices\Bridges\Tracy\Panel');
+                ->setClass('Locale\Bridges\Tracy\Panel');
 
-            $localeService->addSetup('?->register(?)', [$this->prefix('@panel'), '@self']);
+            $locale->addSetup('?->register(?)', [$this->prefix('@panel'), '@self']);
         }
     }
 
@@ -61,7 +61,6 @@ class Extension extends CompilerExtension
     public function beforeCompile()
     {
         $builder = $this->getContainerBuilder();
-//        $config = $this->getConfig();
 
         $applicationService = $builder->getByType('Nette\Application\Application') ?: 'application';
         if ($builder->hasDefinition($applicationService)) {

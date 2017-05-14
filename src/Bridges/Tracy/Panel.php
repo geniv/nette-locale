@@ -3,7 +3,7 @@
 namespace LocaleServices\Bridges\Tracy;
 
 use Latte\Engine;
-use LocaleServices\LocaleService;
+use LocaleServices\Locale;
 use Nette\DI\Container;
 use Nette\SmartObject;
 use Tracy\Debugger;
@@ -38,9 +38,9 @@ class Panel implements IBarPanel
     /**
      * Register to Tracy.
      *
-     * @param LocaleService $localeService
+     * @param Locale $localeService
      */
-    public function register(LocaleService $localeService)
+    public function register(Locale $localeService)
     {
         $this->localeService = $localeService;
         Debugger::getBar()->addPanel($this);

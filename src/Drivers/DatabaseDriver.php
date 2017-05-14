@@ -1,8 +1,8 @@
 <?php
 
-namespace LocaleServices\Drivers;
+namespace Locale\Drivers;
 
-use LocaleServices\LocaleService;
+use Locale;
 use Dibi\Connection;
 use Nette\Caching\Cache;
 use Nette\Caching\IStorage;
@@ -10,18 +10,18 @@ use Exception;
 
 
 /**
- * Class Database
+ * Class DatabaseDriver
  *
  * databazova jazykova sluzba pro DYNAMICKE preklady z databaze, pro dynamicky rozsiritelne jazyky
  *
  * @author  geniv
- * @package LocaleServices\Drivers
+ * @package Locale\Drivers
  */
-class Database extends LocaleService
+class DatabaseDriver extends Locale
 {
 
     /**
-     * Database constructor.
+     * DatabaseDriver constructor.
      *
      * @param array      $parameters
      * @param Connection $database
@@ -37,14 +37,14 @@ class Database extends LocaleService
             throw new Exception('Table name is not defined in configure! (table: xy)');
         }
         // nacteni jmena tabulky
-        $tableLanguages = $parameters['table'];
+        $tableLocale = $parameters['table'];
 
         // ulozeni locales do cache
         $locales = $cache->load('locales');
         if ($locales === null) {
             // nacteni vsech jazyku do pole
             $locales = $database->select('id, code, name, plural, main')
-                ->from($tableLanguages)
+                ->from($tableLocale)
                 ->where('active=%b', true)
                 ->orderBy('id')->asc()
                 ->fetchAssoc('code');
@@ -69,8 +69,8 @@ class Database extends LocaleService
         if ($localeAlias === null) {
             // nacitani aliasu
             $localeAlias = $database->select('a.alias, l.code')
-                ->from($tableLanguages . '_alias')->as('a')
-                ->join($tableLanguages)->as('l')->on('l.id=a.id_locale')
+                ->from($tableLocale . '_alias')->as('a')
+                ->join($tableLocale)->as('l')->on('l.id=a.id_locale')
                 ->fetchPairs('alias', 'code');
 
             $cache->save('localeAlias', $localeAlias);  // cachovani bez expirace
