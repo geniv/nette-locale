@@ -2,6 +2,7 @@
 
 namespace Locale\Bridges\Nette;
 
+use Exception;
 use Locale\Bridges\Tracy\Panel;
 use Locale\Drivers\DatabaseDriver;
 use Locale\Drivers\DevNullDriver;
@@ -30,6 +31,10 @@ class Extension extends CompilerExtension
     {
         $builder = $this->getContainerBuilder();
         $config = $this->getConfig();
+
+        if (!isset($config['parameters'])) {
+            throw new Exception('Parameters is not defined! (' . $this->name . ':{parameters: {...}})');
+        }
 
         switch ($config['source']) {
             case 'DevNull':
