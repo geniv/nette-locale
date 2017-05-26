@@ -2,8 +2,15 @@
 
 namespace Locale\Bridges\Nette;
 
+use Exception;
+use Locale\Bridges\Tracy\Panel;
+use Locale\Drivers\DatabaseDriver;
+use Locale\Drivers\DevNullDriver;
+use Locale\Drivers\NeonDriver;
 use Nette;
+use Nette\Application\Application;
 use Nette\DI\CompilerExtension;
+use Tracy\IBarPanel;
 
 
 /**
@@ -25,30 +32,34 @@ class Extension extends CompilerExtension
         $builder = $this->getContainerBuilder();
         $config = $this->getConfig();
 
+        if (!isset($config['parameters'])) {
+            throw new Exception('Parameters is not defined! (' . $this->name . ':{parameters: {...}})');
+        }
+
         switch ($config['source']) {
             case 'DevNull':
                 $locale = $builder->addDefinition($this->prefix('default'))
-                    ->setClass('Locale\Drivers\DevNullDriver')
+                    ->setClass(DevNullDriver::class)
                     ->setInject(false);
                 break;
 
             case 'Database':
                 $locale = $builder->addDefinition($this->prefix('default'))
-                    ->setClass('Locale\Drivers\DatabaseDriver', [$config['parameters']])
+                    ->setClass(DatabaseDriver::class, [$config['parameters']])
                     ->setInject(false);
                 break;
 
             case 'Neon':
                 $locale = $builder->addDefinition($this->prefix('default'))
-                    ->setClass('Locale\Drivers\NeonDriver', [$config['parameters']])
+                    ->setClass(NeonDriver::class, [$config['parameters']])
                     ->setInject(false);
                 break;
         }
 
         // pokud je debugmod a existuje rozhranni tak aktivuje panel
-        if ($builder->parameters['debugMode'] && interface_exists('Tracy\IBarPanel')) {
+        if ($builder->parameters['debugMode'] && interface_exists(IBarPanel::class)) {
             $builder->addDefinition($this->prefix('panel'))
-                ->setClass('Locale\Bridges\Tracy\Panel');
+                ->setClass(Panel::class);
 
             $locale->addSetup('?->register(?)', [$this->prefix('@panel'), '@self']);
         }
@@ -62,7 +73,7 @@ class Extension extends CompilerExtension
     {
         $builder = $this->getContainerBuilder();
 
-        $applicationService = $builder->getByType('Nette\Application\Application') ?: 'application';
+        $applicationService = $builder->getByType(Application::class) ?: 'application';
         if ($builder->hasDefinition($applicationService)) {
             $builder->getDefinition($applicationService)
                 ->addSetup('$service->onRequest[] = ?', [[$this->prefix('@default'), 'onRequest']]);
