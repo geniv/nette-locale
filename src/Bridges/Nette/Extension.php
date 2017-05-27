@@ -7,7 +7,6 @@ use Locale\Bridges\Tracy\Panel;
 use Locale\Drivers\DatabaseDriver;
 use Locale\Drivers\DevNullDriver;
 use Locale\Drivers\NeonDriver;
-use Nette;
 use Nette\Application\Application;
 use Nette\DI\CompilerExtension;
 use Tracy\IBarPanel;
