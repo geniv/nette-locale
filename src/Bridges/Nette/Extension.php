@@ -2,14 +2,11 @@
 
 namespace Locale\Bridges\Nette;
 
-use Exception;
 use Locale\Bridges\Tracy\Panel;
 use Locale\Drivers\DatabaseDriver;
 use Locale\Drivers\DevNullDriver;
 use Locale\Drivers\NeonDriver;
-use Nette\Application\Application;
 use Nette\DI\CompilerExtension;
-use Tracy\IBarPanel;
 
 
 /**
@@ -22,6 +19,12 @@ use Tracy\IBarPanel;
  */
 class Extension extends CompilerExtension
 {
+    /** @var array vychozi hodnoty */
+    private $defaults = [
+        'source'     => 'DevNull',
+        'parameters' => [],
+    ];
+
 
     /**
      * Load configuration.
@@ -29,11 +32,7 @@ class Extension extends CompilerExtension
     public function loadConfiguration()
     {
         $builder = $this->getContainerBuilder();
-        $config = $this->getConfig();
-
-        if (!isset($config['parameters'])) {
-            throw new Exception('Parameters is not defined! (' . $this->name . ':{parameters: {...}})');
-        }
+        $config = $this->validateConfig($this->defaults);
 
         // definice driveru
         switch ($config['source']) {
