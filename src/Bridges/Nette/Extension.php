@@ -35,30 +35,27 @@ class Extension extends CompilerExtension
             throw new Exception('Parameters is not defined! (' . $this->name . ':{parameters: {...}})');
         }
 
+        // definice driveru
         switch ($config['source']) {
             case 'DevNull':
-                $locale = $builder->addDefinition($this->prefix('default'))
+                $builder->addDefinition($this->prefix('default'))
                     ->setClass(DevNullDriver::class);
                 break;
 
             case 'Database':
-                $locale = $builder->addDefinition($this->prefix('default'))
+                $builder->addDefinition($this->prefix('default'))
                     ->setClass(DatabaseDriver::class, [$config['parameters']]);
                 break;
 
             case 'Neon':
-                $locale = $builder->addDefinition($this->prefix('default'))
+                $builder->addDefinition($this->prefix('default'))
                     ->setClass(NeonDriver::class, [$config['parameters']]);
                 break;
         }
 
-        // pokud je debugmod a existuje rozhranni tak aktivuje panel
-        if ($builder->parameters['debugMode'] && interface_exists(IBarPanel::class)) {
-            $builder->addDefinition($this->prefix('panel'))
-                ->setClass(Panel::class);
-
-            $locale->addSetup('?->register(?)', [$this->prefix('@panel'), '@self']);
-        }
+        // definice panelu
+        $builder->addDefinition($this->prefix('panel'))
+            ->setClass(Panel::class);
     }
 
 
@@ -69,10 +66,12 @@ class Extension extends CompilerExtension
     {
         $builder = $this->getContainerBuilder();
 
-        $applicationService = $builder->getByType(Application::class) ?: 'application';
-        if ($builder->hasDefinition($applicationService)) {
-            $builder->getDefinition($applicationService)
-                ->addSetup('$service->onRequest[] = ?', [[$this->prefix('@default'), 'onRequest']]);
-        }
+        // pripojeni modelu do application
+        $builder->getDefinition('application.application')
+            ->addSetup('$service->onRequest[] = ?', [[$this->prefix('@default'), 'onRequest']]);
+
+        // pripojeni panelu do tracy
+        $builder->getDefinition($this->prefix('default'))
+            ->addSetup('?->register(?)', [$this->prefix('@panel'), '@self']);
     }
 }
