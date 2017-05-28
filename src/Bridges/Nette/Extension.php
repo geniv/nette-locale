@@ -21,8 +21,11 @@ class Extension extends CompilerExtension
 {
     /** @var array vychozi hodnoty */
     private $defaults = [
-        'source'     => 'DevNull',
-        'parameters' => [],
+        'source'  => 'DevNull',
+        'default' => null,
+        'locales' => [],
+        'plurals' => [],
+        'alias'   => [],
     ];
 
 
@@ -43,12 +46,12 @@ class Extension extends CompilerExtension
 
             case 'Database':
                 $builder->addDefinition($this->prefix('default'))
-                    ->setClass(DatabaseDriver::class, [$config['parameters']]);
+                    ->setClass(DatabaseDriver::class, [$config]);
                 break;
 
             case 'Neon':
                 $builder->addDefinition($this->prefix('default'))
-                    ->setClass(NeonDriver::class, [$config['parameters']]);
+                    ->setClass(NeonDriver::class, [$config]);
                 break;
         }
 

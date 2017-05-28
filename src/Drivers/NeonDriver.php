@@ -2,6 +2,7 @@
 
 namespace Locale\Drivers;
 
+use Exception;
 use Locale\Locale;
 use Nette\Caching\Cache;
 use Nette\Caching\IStorage;
@@ -10,7 +11,7 @@ use Nette\Caching\IStorage;
 /**
  * Class NeonDriver
  *
- * jazykova sluzba se statickym nastavenim pro STATICKE preklady, pro pevne definovane jazyky
+ * Staticka jazykova sluzba se statickym nastavenim pro STATICKE preklady, pro pevne definovane jazyky.
  *
  * @author  geniv
  * @package Locale\Drivers
@@ -22,11 +23,12 @@ class NeonDriver extends Locale
      * NeonDriver constructor.
      *
      * @param array    $parameters
-     * @param IStorage $cacheStorage
+     * @param IStorage $storage
+     * @throws Exception
      */
-    public function __construct(array $parameters, IStorage $cacheStorage)
+    public function __construct(array $parameters, IStorage $storage)
     {
-        $cache = new Cache($cacheStorage, 'cache' . __CLASS__);
+        $cache = new Cache($storage, 'cache-LocaleDrivers-NeonDriver');
 
         if (!isset($parameters['locales'])) {
             throw new Exception('Locales is not defined in configure! (locales: [xy => XY])');

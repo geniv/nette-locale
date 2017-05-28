@@ -12,7 +12,7 @@ use Exception;
 /**
  * Class DatabaseDriver
  *
- * databazova jazykova sluzba pro DYNAMICKE preklady z databaze, pro dynamicky rozsiritelne jazyky
+ * Databazova jazykova sluzba pro DYNAMICKE preklady z databaze, pro dynamicky rozsiritelne jazyky.
  *
  * @author  geniv
  * @package Locale\Drivers
@@ -25,12 +25,12 @@ class DatabaseDriver extends Locale
      *
      * @param array      $parameters
      * @param Connection $connection
-     * @param IStorage   $cacheStorage
+     * @param IStorage   $storage
      * @throws Exception
      */
-    public function __construct(array $parameters, Connection $connection, IStorage $cacheStorage)
+    public function __construct(array $parameters, Connection $connection, IStorage $storage)
     {
-        $cache = new Cache($cacheStorage, 'cache' . __CLASS__);
+        $cache = new Cache($storage, 'cache-LocaleDrivers-DatabaseDriver');
 
         // pokud parametr table neexistuje
         if (!isset($parameters['table'])) {
