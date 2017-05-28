@@ -22,6 +22,7 @@ class Extension extends CompilerExtension
     /** @var array vychozi hodnoty */
     private $defaults = [
         'source'  => 'DevNull',
+        'table'   => null,
         'default' => null,
         'locales' => [],
         'plurals' => [],
