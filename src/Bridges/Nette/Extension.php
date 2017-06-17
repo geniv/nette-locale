@@ -21,12 +21,13 @@ class Extension extends CompilerExtension
 {
     /** @var array vychozi hodnoty */
     private $defaults = [
-        'source'  => 'DevNull',
-        'table'   => null,
-        'default' => null,
-        'locales' => [],
-        'plurals' => [],
-        'alias'   => [],
+        'debugger' => true,
+        'source'   => 'DevNull',
+        'table'    => null,
+        'default'  => null,
+        'locales'  => [],
+        'plurals'  => [],
+        'alias'    => [],
     ];
 
 
@@ -68,13 +69,16 @@ class Extension extends CompilerExtension
     public function beforeCompile()
     {
         $builder = $this->getContainerBuilder();
+        $config = $this->validateConfig($this->defaults);
 
         // pripojeni modelu do application
         $builder->getDefinition('application.application')
             ->addSetup('$service->onRequest[] = ?', [[$this->prefix('@default'), 'onRequest']]);
 
         // pripojeni panelu do tracy
-        $builder->getDefinition($this->prefix('default'))
-            ->addSetup('?->register(?)', [$this->prefix('@panel'), '@self']);
+        if ($config['debugger']) {
+            $builder->getDefinition($this->prefix('default'))
+                ->addSetup('?->register(?)', [$this->prefix('@panel'), '@self']);
+        }
     }
 }

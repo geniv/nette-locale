@@ -36,6 +36,7 @@ neon configure extension:
 ```neon
 # lokalizace
 locale:
+#   debugger: false
 #   source: "DevNull"
     source: "Database"
     table: %tb_locale%
