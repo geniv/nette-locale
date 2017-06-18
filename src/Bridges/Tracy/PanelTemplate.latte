@@ -1,8 +1,7 @@
 <h1>{$localeClass}</h1>
 <div class="tracy-inner">
     <p n:if="!$locales">No locale</p>
-    <table class="table" n:ifset="$locales">
-        <thead>
+    <table n:ifset="$locales">
         <tr>
             <th>Id</th>
             <th>Code</th>
@@ -10,15 +9,14 @@
             <th>Plural</th>
             <th>Main</th>
         </tr>
-        </thead>
-        <tbody>
-        <tr n:foreach="$locales as $locale" n:class="$locale['id']==$localeId?active">
-            <td>{$locale['id']}</td>
-            <td>{$locale['code']}</td>
-            <td>{$locale['name']}</td>
-            <td>{$locale['plural']}</td>
-            <td>{ifset $locale['main']}{$locale['main']}{else}{$locale['id']==$localeIdDefault ? 1 : 0}{/ifset}</td>
+        <tr n:foreach="$locales as $locale">
+            <td><strong n:tag-if="$locale['id']==$localeId?active">{$locale['id']}</strong></td>
+            <td><strong n:tag-if="$locale['id']==$localeId?active">{$locale['code']}</strong></td>
+            <td><strong n:tag-if="$locale['id']==$localeId?active">{$locale['name']}</strong></td>
+            <td><strong n:tag-if="$locale['id']==$localeId?active">{$locale['plural']}</strong></td>
+            <td>
+                <strong n:tag-if="$locale['id']==$localeId?active">{ifset $locale['main']}{$locale['main']}{else}{$locale['id']==$localeIdDefault ? 1 : 0}{/ifset}</strong>
+            </td>
         </tr>
-        </tbody>
     </table>
 </div>
