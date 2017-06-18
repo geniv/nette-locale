@@ -10,12 +10,12 @@
             <th>Main</th>
         </tr>
         <tr n:foreach="$locales as $locale">
-            <td><strong n:tag-if="$locale['id']==$localeId?active">{$locale['id']}</strong></td>
-            <td><strong n:tag-if="$locale['id']==$localeId?active">{$locale['code']}</strong></td>
-            <td><strong n:tag-if="$locale['id']==$localeId?active">{$locale['name']}</strong></td>
-            <td><strong n:tag-if="$locale['id']==$localeId?active">{$locale['plural']}</strong></td>
+            <td><strong n:tag-if="$locale['id']==$localeId">{$locale['id']}</strong></td>
+            <td><strong n:tag-if="$locale['id']==$localeId">{$locale['code']}</strong></td>
+            <td><strong n:tag-if="$locale['id']==$localeId">{$locale['name']}</strong></td>
+            <td><strong n:tag-if="$locale['id']==$localeId">{$locale['plural']}</strong></td>
             <td>
-                <strong n:tag-if="$locale['id']==$localeId?active">{ifset $locale['main']}{$locale['main']}{else}{$locale['id']==$localeIdDefault ? 1 : 0}{/ifset}</strong>
+                <strong n:tag-if="$locale['id']==$localeId">{ifset $locale['main']}{$locale['main']}{else}{$locale['id']==$localeIdDefault ? 1 : 0}{/ifset}</strong>
             </td>
         </tr>
     </table>
