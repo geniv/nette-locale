@@ -19,7 +19,9 @@ use Exception;
  */
 class DatabaseDriver extends Locale
 {
-    const TABLE_NAME = 'locale',
+    // define constant table names
+    const
+        TABLE_NAME = 'locale',
         TABLE_NAME_ALIAS = 'locale_alias';
 
 
