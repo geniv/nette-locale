@@ -19,6 +19,9 @@ use Exception;
  */
 class DatabaseDriver extends Locale
 {
+    const TABLE_NAME = 'locale',
+        TABLE_NAME_ALIAS = 'locale_alias';
+
 
     /**
      * DatabaseDriver constructor.
@@ -26,18 +29,14 @@ class DatabaseDriver extends Locale
      * @param array      $parameters
      * @param Connection $connection
      * @param IStorage   $storage
-     * @throws Exception
      */
     public function __construct(array $parameters, Connection $connection, IStorage $storage)
     {
         $cache = new Cache($storage, 'cache-LocaleDrivers-DatabaseDriver');
 
-        // pokud parametr table neexistuje
-        if (!isset($parameters['table'])) {
-            throw new Exception('Table name is not defined in configure! (table: xy)');
-        }
-        // nacteni jmena tabulky
-        $tableLocale = $parameters['table'];
+        // define table names
+        $tableLocale = $parameters['tablePrefix'] . self::TABLE_NAME;
+        $tableLocaleAlias = $parameters['tablePrefix'] . self::TABLE_NAME_ALIAS;
 
         // ulozeni locales do cache
         $locales = $cache->load('locales');
@@ -69,7 +68,7 @@ class DatabaseDriver extends Locale
         if ($localeAlias === null) {
             // nacitani aliasu
             $localeAlias = $connection->select('a.alias, l.code')
-                ->from($tableLocale . '_alias')->as('a')
+                ->from($tableLocaleAlias)->as('a')
                 ->join($tableLocale)->as('l')->on('l.id=a.id_locale')
                 ->fetchPairs('alias', 'code');
 
