@@ -21,13 +21,13 @@ class Extension extends CompilerExtension
 {
     /** @var array vychozi hodnoty */
     private $defaults = [
-        'debugger' => true,
-        'source'   => 'DevNull',
-        'table'    => null,
-        'default'  => null,
-        'locales'  => [],
-        'plurals'  => [],
-        'alias'    => [],
+        'debugger'    => true,
+        'source'      => 'DevNull',
+        'tablePrefix' => null,
+        'default'     => null,
+        'locales'     => [],
+        'plurals'     => [],
+        'alias'       => [],
     ];
 
 

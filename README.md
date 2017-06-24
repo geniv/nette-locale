@@ -39,7 +39,7 @@ locale:
 #   debugger: false
 #   source: "DevNull"
     source: "Database"
-    table: %tb_locale%
+    tablePrefix: %tablePrefix%
 #   source: "Neon"
 #   default: "cs"
 #   locales:
