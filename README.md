@@ -1,9 +1,11 @@
 Locale
 ======
 
-Plural forms: http://docs.translatehouse.org/projects/localization-guide/en/latest/l10n/pluralforms.html
-In case new item must by added char `$` and add brackets! Otherwise function `EVAL` has problem with correct evaluate pural.
-It is recommended change sort pulars number (eg: 0 => `0 oken, 5 oken`, 1 => `1 okno`, 2 => `2 okna, 3 okna`).
+Plural forms documents: http://docs.translatehouse.org/projects/localization-guide/en/latest/l10n/pluralforms.html
+
+In case new item must by added char `$` and add brackets `(`, `)`! Otherwise function `EVAL` has problem with correct evaluate plural form.
+
+It is recommended change sort plurals form number (eg: 0 => `0 oken, 5 oken`, 1 => `1 okno`, 2 => `2 okna, 3 okna`).
 
 Installation
 ------------
@@ -63,4 +65,22 @@ locale:
 ```php
 use Locale\Locale;
 $locale = $this->context->getByType(Locale::class);
+
+// or
+
+/** @var Locale\Locale @inject */
+public $locale;
+
+// methods:
+$locale->getListName() : array
+$locale->getListId() : array
+$locale->getLocales() : array
+$locale->getCode() : string
+$locale->setCode() : void
+$locale->getId() : int
+$locale->getIdDefault() : int
+$locale->getCodeDefault() : string
+$locale->isDefaultLocale() : bool
+$locale->getPlural() : string
+$locale->getIdByCode() : string
 ```
