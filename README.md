@@ -75,12 +75,12 @@ public $locale;
 $locale->getListName() : array
 $locale->getListId() : array
 $locale->getLocales() : array
-$locale->getCode() : string
-$locale->setCode() : void
+$locale->getCode($upper) : string
+$locale->setCode($code) : void
 $locale->getId() : int
 $locale->getIdDefault() : int
-$locale->getCodeDefault() : string
+$locale->getCodeDefault($upper) : string
 $locale->isDefaultLocale() : bool
 $locale->getPlural() : string
-$locale->getIdByCode() : string
+$locale->getIdByCode($code) : string
 ```
