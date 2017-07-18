@@ -12,8 +12,6 @@ use Nette\DI\CompilerExtension;
 /**
  * Class Extension
  *
- * nette extension pro zavadeni jazykove sluzby jako rozsireni
- *
  * @author  geniv
  * @package Locale\Bridges\Nette
  */

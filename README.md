@@ -1,6 +1,10 @@
 Locale
 ======
 
+Plural forms: http://docs.translatehouse.org/projects/localization-guide/en/latest/l10n/pluralforms.html
+In case new item must by added char `$` and add brackets! Otherwise function `EVAL` has problem with correct evaluate pural.
+It is recommended change sort pulars number (eg: 0 => `0 oken, 5 oken`, 1 => `1 okno`, 2 => `2 okna, 3 okna`).
+
 Installation
 ------------
 
@@ -9,11 +13,12 @@ $ composer require geniv/nette-locale
 ```
 or
 ```json
-"geniv/nette-locale": ">=1.0"
+"geniv/nette-locale": ">=1.0.0"
 ```
 
-internal dependency:
+require:
 ```json
+"php": ">=5.6.0",
 "nette/nette": ">=2.4.0",
 "dibi/dibi": ">=3.0.0"
 ```
@@ -22,9 +27,9 @@ Include in application
 ----------------------
 
 available source drivers:
-- database (dibi + cache)
-- neon (filesystem)
-- devnull (ignore locale)
+- Database (dibi + cache)
+- Neon (filesystem)
+- DevNull (ignore locale)
 
 neon configure:
 ```neon
