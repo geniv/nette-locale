@@ -58,7 +58,7 @@ class Extension extends CompilerExtension
 
         // if define autowired then set value
         if (isset($config['autowired'])) {
-            $builder->getDefinition('default')
+            $builder->getDefinition($this->prefix('default'))
                 ->setAutowired($config['autowired']);
         }
 
