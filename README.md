@@ -43,7 +43,8 @@ neon configure extension:
 ```neon
 # lokalizace
 locale:
-#   debugger: false
+#   debugger: false     # default true, disable tracy bar
+#   autowired: false    # default null, false => disable autowiring (in case multiple extension)
 #   source: "DevNull"
     source: "Database"
     tablePrefix: %tablePrefix%

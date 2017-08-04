@@ -17,9 +17,10 @@ use Nette\DI\CompilerExtension;
  */
 class Extension extends CompilerExtension
 {
-    /** @var array vychozi hodnoty */
+    /** @var array default values */
     private $defaults = [
         'debugger'    => true,
+        'autowired'   => null,
         'source'      => 'DevNull',
         'tablePrefix' => null,
         'default'     => null,
@@ -37,7 +38,7 @@ class Extension extends CompilerExtension
         $builder = $this->getContainerBuilder();
         $config = $this->validateConfig($this->defaults);
 
-        // definice driveru
+        // define driver
         switch ($config['source']) {
             case 'DevNull':
                 $builder->addDefinition($this->prefix('default'))
@@ -55,7 +56,12 @@ class Extension extends CompilerExtension
                 break;
         }
 
-        // definice panelu
+        // if define autowired then set value
+        if (isset($config['autowired'])) {
+            $builder->setAutowired($config['autowired']);
+        }
+
+        // define panel
         $builder->addDefinition($this->prefix('panel'))
             ->setClass(Panel::class);
     }
@@ -69,11 +75,11 @@ class Extension extends CompilerExtension
         $builder = $this->getContainerBuilder();
         $config = $this->validateConfig($this->defaults);
 
-        // pripojeni modelu do application
+        // linked model to application
         $builder->getDefinition('application.application')
             ->addSetup('$service->onRequest[] = ?', [[$this->prefix('@default'), 'onRequest']]);
 
-        // pripojeni panelu do tracy
+        // linked panel to tracy
         if ($config['debugger']) {
             $builder->getDefinition($this->prefix('default'))
                 ->addSetup('?->register(?)', [$this->prefix('@panel'), '@self']);
