@@ -58,7 +58,7 @@ locale:
 #       cs: "$nplurals=3; $plural=($n==1) ? 1 : (($n>=2 && $n<=4) ? 2 : 0);"
 #       en: "$nplurals=2; $plural=($n != 1) ? 0 : 1;"
 #       de: "$nplurals=2; $plural=($n != 1) ? 0 : 1;"
-#        ru: "$nplurals=3; $plural=($n%10==1 && $n%100!=11 ? 0 : $n%10>=2 && $n%10<=4 && ($n%100<10 || $n%100>=20) ? 1 : 2);"
+#       ru: "$nplurals=3; $plural=($n%10==1 && $n%100!=11 ? 0 : $n%10>=2 && $n%10<=4 && ($n%100<10 || $n%100>=20) ? 1 : 2);"
 #   alias:
 #       sk: cs
 #       pl: en
