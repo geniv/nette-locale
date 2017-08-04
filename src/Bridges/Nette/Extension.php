@@ -58,7 +58,8 @@ class Extension extends CompilerExtension
 
         // if define autowired then set value
         if (isset($config['autowired'])) {
-            $builder->setAutowired($config['autowired']);
+            $builder->getDefinition('default')
+                ->setAutowired($config['autowired']);
         }
 
         // define panel
