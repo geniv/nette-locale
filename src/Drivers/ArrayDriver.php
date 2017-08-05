@@ -9,18 +9,18 @@ use Nette\Caching\IStorage;
 
 
 /**
- * Class NeonDriver
+ * Class ArrayDriver
  *
- * Staticka jazykova sluzba se statickym nastavenim pro STATICKE preklady, pro pevne definovane jazyky.
+ * Static locale driver.
  *
  * @author  geniv
  * @package Locale\Drivers
  */
-class NeonDriver extends Locale
+class ArrayDriver extends Locale
 {
 
     /**
-     * NeonDriver constructor.
+     * ArrayDriver constructor.
      *
      * @param array    $parameters
      * @param IStorage $storage
@@ -28,7 +28,7 @@ class NeonDriver extends Locale
      */
     public function __construct(array $parameters, IStorage $storage)
     {
-        $cache = new Cache($storage, 'cache-LocaleDrivers-NeonDriver');
+        $cache = new Cache($storage, 'cache-LocaleDrivers-ArrayDriver');
 
         if (!isset($parameters['locales'])) {
             throw new Exception('Locales is not defined in configure! (locales: [xy => XY])');
@@ -65,7 +65,6 @@ class NeonDriver extends Locale
         if (isset($parameters['alias'])) {
             $localeAlias = $parameters['alias'];
         }
-
         parent::__construct($defaultLocale, $locales, $localeAlias);
     }
 }

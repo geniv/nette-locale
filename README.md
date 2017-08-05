@@ -28,9 +28,9 @@ require:
 Include in application
 ----------------------
 
-available source drivers:
-- Database (dibi + cache)
-- Neon (filesystem)
+### available source drivers:
+- Dibi (dibi + cache)
+- Array (filesystem)
 - DevNull (ignore locale)
 
 neon configure:
@@ -44,11 +44,12 @@ neon configure extension:
 # lokalizace
 locale:
 #   debugger: false     # default true, disable tracy bar
-#   autowired: false    # default null, false => disable autowiring (in case multiple extension)
+#   autowired: false    # default null, false => disable autowiring (in case multiple linked extension)
+#   onRequest: null     # default application.application, internal source current locale 
 #   source: "DevNull"
-    source: "Database"
+    source: "Dibi"
     tablePrefix: %tablePrefix%
-#   source: "Neon"
+#   source: "Array"
 #   default: "cs"
 #   locales:
 #       cs: "Čeština"
@@ -58,7 +59,7 @@ locale:
 #       cs: "$nplurals=3; $plural=($n==1) ? 1 : (($n>=2 && $n<=4) ? 2 : 0);"
 #       en: "$nplurals=2; $plural=($n != 1) ? 0 : 1;"
 #       de: "$nplurals=2; $plural=($n != 1) ? 0 : 1;"
-#        ru: "$nplurals=3; $plural=($n%10==1 && $n%100!=11 ? 0 : $n%10>=2 && $n%10<=4 && ($n%100<10 || $n%100>=20) ? 1 : 2);"
+#       ru: "$nplurals=3; $plural=($n%10==1 && $n%100!=11 ? 0 : $n%10>=2 && $n%10<=4 && ($n%100<10 || $n%100>=20) ? 1 : 2);"
 #   alias:
 #       sk: cs
 #       pl: en
@@ -77,12 +78,21 @@ public $locale;
 $locale->getListName() : array
 $locale->getListId() : array
 $locale->getLocales() : array
+
 $locale->getCode($upper) : string
 $locale->setCode($code) : void
+
 $locale->getId() : int
 $locale->getIdDefault() : int
+
 $locale->getCodeDefault($upper) : string
 $locale->isDefaultLocale() : bool
 $locale->getPlural() : string
 $locale->getIdByCode($code) : string
+```
+
+### description
+`onRequest` is default in `Nette\Application\Application`:
+```php
+function onRequest(Application $sender, Request $request) {}
 ```
