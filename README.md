@@ -45,7 +45,7 @@ neon configure extension:
 locale:
 #   debugger: false     # default true, disable tracy bar
 #   autowired: false    # default null, false => disable autowiring (in case multiple linked extension)
-#   onRequest: application.application  # default application.application, internal source current locale 
+#   onRequest: null     # default application.application, internal source current locale 
 #   source: "DevNull"
     source: "Dibi"
     tablePrefix: %tablePrefix%

@@ -11,7 +11,7 @@ use Nette\Caching\IStorage;
 /**
  * Class ArrayDriver
  *
- * Staticka jazykova sluzba se statickym nastavenim pro STATICKE preklady, pro pevne definovane jazyky.
+ * Static locale driver.
  *
  * @author  geniv
  * @package Locale\Drivers

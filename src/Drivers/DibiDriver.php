@@ -11,7 +11,7 @@ use Nette\Caching\IStorage;
 /**
  * Class DibiDriver
  *
- * Dibi language driver
+ * Dibi locale driver.
  *
  * @author  geniv
  * @package Locale\Drivers

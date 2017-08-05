@@ -8,7 +8,7 @@ use Locale\Locale;
 /**
  * Class DevNullDriver
  *
- * vypnuti prekladu
+ * Disable locale driver.
  *
  * @author  geniv
  * @package Locale\Drivers
