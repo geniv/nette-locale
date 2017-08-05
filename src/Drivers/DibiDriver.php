@@ -6,18 +6,17 @@ use Locale\Locale;
 use Dibi\Connection;
 use Nette\Caching\Cache;
 use Nette\Caching\IStorage;
-use Exception;
 
 
 /**
- * Class DatabaseDriver
+ * Class DibiDriver
  *
- * Databazova jazykova sluzba pro DYNAMICKE preklady z databaze, pro dynamicky rozsiritelne jazyky.
+ * Dibi language driver
  *
  * @author  geniv
  * @package Locale\Drivers
  */
-class DatabaseDriver extends Locale
+class DibiDriver extends Locale
 {
     // define constant table names
     const
@@ -26,7 +25,7 @@ class DatabaseDriver extends Locale
 
 
     /**
-     * DatabaseDriver constructor.
+     * DibiDriver constructor.
      *
      * @param array      $parameters
      * @param Connection $connection
@@ -34,7 +33,7 @@ class DatabaseDriver extends Locale
      */
     public function __construct(array $parameters, Connection $connection, IStorage $storage)
     {
-        $cache = new Cache($storage, 'cache-LocaleDrivers-DatabaseDriver');
+        $cache = new Cache($storage, 'cache-LocaleDrivers-DibiDriver');
 
         // define table names
         $tableLocale = $parameters['tablePrefix'] . self::TABLE_NAME;
@@ -46,7 +45,7 @@ class DatabaseDriver extends Locale
             // nacteni vsech jazyku do pole
             $locales = $connection->select('id, code, name, plural, main')
                 ->from($tableLocale)
-                ->where('active=%b', true)
+                ->where(['active' => true])
                 ->orderBy('id')->asc()
                 ->fetchAssoc('code');
 
@@ -76,7 +75,6 @@ class DatabaseDriver extends Locale
 
             $cache->save('localeAlias', $localeAlias);  // cachovani bez expirace
         }
-
         parent::__construct($defaultLocale, $locales, $localeAlias);
     }
 }

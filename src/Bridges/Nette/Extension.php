@@ -3,9 +3,9 @@
 namespace Locale\Bridges\Nette;
 
 use Locale\Bridges\Tracy\Panel;
-use Locale\Drivers\DatabaseDriver;
+use Locale\Drivers\DibiDriver;
 use Locale\Drivers\DevNullDriver;
-use Locale\Drivers\NeonDriver;
+use Locale\Drivers\ArrayDriver;
 use Nette\DI\CompilerExtension;
 
 
@@ -21,7 +21,8 @@ class Extension extends CompilerExtension
     private $defaults = [
         'debugger'    => true,
         'autowired'   => null,
-        'source'      => 'DevNull',
+        'onRequest'   => 'application.application',
+        'source'      => 'DevNull', // DevNull|Dibi|Array
         'tablePrefix' => null,
         'default'     => null,
         'locales'     => [],
@@ -45,14 +46,14 @@ class Extension extends CompilerExtension
                     ->setClass(DevNullDriver::class);
                 break;
 
-            case 'Database':
+            case 'Dibi':
                 $builder->addDefinition($this->prefix('default'))
-                    ->setClass(DatabaseDriver::class, [$config]);
+                    ->setClass(DibiDriver::class, [$config]);
                 break;
 
-            case 'Neon':
+            case 'Array':
                 $builder->addDefinition($this->prefix('default'))
-                    ->setClass(NeonDriver::class, [$config]);
+                    ->setClass(ArrayDriver::class, [$config]);
                 break;
         }
 
@@ -63,8 +64,10 @@ class Extension extends CompilerExtension
         }
 
         // define panel
-        $builder->addDefinition($this->prefix('panel'))
-            ->setClass(Panel::class);
+        if (isset($config['debugger']) && $config['debugger']) {
+            $builder->addDefinition($this->prefix('panel'))
+                ->setClass(Panel::class);
+        }
     }
 
 
@@ -76,12 +79,14 @@ class Extension extends CompilerExtension
         $builder = $this->getContainerBuilder();
         $config = $this->validateConfig($this->defaults);
 
-        // linked model to application
-        $builder->getDefinition('application.application')
-            ->addSetup('$service->onRequest[] = ?', [[$this->prefix('@default'), 'onRequest']]);
+        // linked onRequest
+        if (isset($config['onRequest'])) {
+            $builder->getDefinition($config['onRequest'])
+                ->addSetup('$service->onRequest[] = ?', [[$this->prefix('@default'), 'onRequest']]);
+        }
 
         // linked panel to tracy
-        if ($config['debugger']) {
+        if (isset($config['debugger']) && $config['debugger']) {
             $builder->getDefinition($this->prefix('default'))
                 ->addSetup('?->register(?)', [$this->prefix('@panel'), '@self']);
         }
