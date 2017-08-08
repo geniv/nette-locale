@@ -54,7 +54,7 @@ class Locale
     public function onRequest(Application $sender, Request $request)
     {
         $params = $request->getParameters();
-        $this->setCode($params['locale']);
+        $this->setCode(isset($params['locale']) ? $params['locale'] : $this->defaultLocale);
     }
 
 
