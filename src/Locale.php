@@ -13,7 +13,7 @@ use Nette\SmartObject;
  * @author  geniv
  * @package Locale
  */
-class Locale
+class Locale implements ILocale
 {
     use SmartObject;
 
@@ -30,17 +30,17 @@ class Locale
     /**
      * Locale constructor.
      *
-     * @param      $defaultLocale
-     * @param      $locales
-     * @param null $localeAlias
+     * @param       $defaultLocale
+     * @param array $locales
+     * @param null  $localeAlias
      */
-    protected function __construct($defaultLocale, $locales, $localeAlias = null)
+    protected function __construct($defaultLocale, array $locales, $localeAlias = null)
     {
         $this->defaultLocale = $defaultLocale;
         $this->locales = $locales;
         $this->aliasLocale = $localeAlias;
 
-        // implicitni nastaveni vyraneho jakyka
+        // set default locale
         $this->selectLocale = $this->defaultLocale;
     }
 
@@ -102,7 +102,7 @@ class Locale
 
 
     /**
-     * Internal check curent locale with apply alias.
+     * Internal check current locale with apply alias.
      */
     private function checkLocale()
     {
@@ -191,7 +191,7 @@ class Locale
 
 
     /**
-     * Get prulral locale.
+     * Get plural locale.
      *
      * @return mixed
      */
