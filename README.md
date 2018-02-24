@@ -46,11 +46,11 @@ locale:
 #   debugger: false     # default true, disable tracy bar
 #   autowired: false    # default null, false => disable autowiring (in case multiple linked extension) | self
 #   onRequest: null     # default application.application, internal source current locale 
-#   driver: DevNullDriver
-#   driver: ArrayDriver
-#   driver: DibiDriver(%tablePrefix%)
-    source: "Dibi"
-    tablePrefix: %tablePrefix%
+#   driver: Locale\Drivers\DevNullDriver
+#   driver: Locale\Drivers\ArrayDriver
+   driver: Locale\Drivers\DibiDriver(%tablePrefix%)
+#   source: "Dibi"
+#   tablePrefix: %tablePrefix%
 #   source: "Array"
 #   default: "cs"
 #   locales:
