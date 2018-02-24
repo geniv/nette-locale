@@ -20,7 +20,7 @@ or
 
 require:
 ```json
-"php": ">=5.6.0",
+"php": ">=7.0.0",
 "nette/nette": ">=2.4.0",
 "dibi/dibi": ">=3.0.0"
 ```
@@ -46,7 +46,9 @@ locale:
 #   debugger: false     # default true, disable tracy bar
 #   autowired: false    # default null, false => disable autowiring (in case multiple linked extension) | self
 #   onRequest: null     # default application.application, internal source current locale 
-#   source: "DevNull"
+#   driver: DevNullDriver
+#   driver: ArrayDriver
+#   driver: DibiDriver(%tablePrefix%)
     source: "Dibi"
     tablePrefix: %tablePrefix%
 #   source: "Array"

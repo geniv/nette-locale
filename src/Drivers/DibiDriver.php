@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Locale\Drivers;
 
@@ -27,17 +27,17 @@ class DibiDriver extends Locale
     /**
      * DibiDriver constructor.
      *
-     * @param array      $parameters
+     * @param string     $prefix
      * @param Connection $connection
      * @param IStorage   $storage
      */
-    public function __construct(array $parameters, Connection $connection, IStorage $storage)
+    public function __construct(string $prefix, Connection $connection, IStorage $storage)
     {
         $cache = new Cache($storage, 'cache-LocaleDrivers-DibiDriver');
 
         // define table names
-        $tableLocale = $parameters['tablePrefix'] . self::TABLE_NAME;
-        $tableLocaleAlias = $parameters['tablePrefix'] . self::TABLE_NAME_ALIAS;
+        $tableLocale = $prefix . self::TABLE_NAME;
+        $tableLocaleAlias = $prefix . self::TABLE_NAME_ALIAS;
 
         // ulozeni locales do cache
         $locales = $cache->load('locales');

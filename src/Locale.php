@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Locale;
 
@@ -17,13 +17,13 @@ class Locale implements ILocale
 {
     use SmartObject;
 
-    /** @var array pole jazyku */
+    /** @var array */
     private $locales;
-    /** @var array jazykove aliasy */
+    /** @var array */
     private $aliasLocale;
-    /** @var string vychozi jazyk */
+    /** @var string */
     private $defaultLocale;
-    /** @var string vybrany jazyk */
+    /** @var string */
     private $selectLocale;
 
 
@@ -48,10 +48,10 @@ class Locale implements ILocale
     /**
      * Get current locale from HttpRequest.
      *
-     * @param Application $sender
+     * @param Application $application
      * @param Request     $request
      */
-    public function onRequest(Application $sender, Request $request)
+    public function onRequest(Application $application, Request $request)
     {
         $params = $request->getParameters();
         $this->setCode(isset($params['locale']) ? $params['locale'] : $this->defaultLocale);
