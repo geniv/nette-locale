@@ -13,92 +13,93 @@ interface ILocale
 {
 
     /**
-     * Get list name locales.
+     * Get list name.
      *
      * @return array
      */
-    public function getListName();
+    public function getListName(): array;
 
 
     /**
-     * Get list id locales.
+     * Get list id.
      *
      * @return array
      */
-    public function getListId();
+    public function getListId(): array;
 
 
     /**
-     * Get list locales.
+     * Get locales.
      *
      * @return array
      */
-    public function getLocales();
+    public function getLocales(): array;
 
 
     /**
-     * Get current code locale.
-     *
-     * @param bool $upper
-     * @return mixed
-     */
-    public function getCode($upper = false);
-
-
-    /**
-     * Set current code locale.
-     *
-     * @param $code
-     */
-    public function setCode($code);
-
-
-    /**
-     * Get current id locale.
-     *
-     * @return mixed
-     */
-    public function getId();
-
-
-    /**
-     * Get default id locale.
-     *
-     * @return null
-     */
-    public function getIdDefault();
-
-
-    /**
-     * Get default code locale.
+     * Get code.
      *
      * @param bool $upper
      * @return string
      */
-    public function getCodeDefault($upper = false);
+    public function getCode(bool $upper = false): string;
 
 
     /**
-     * Is default locale?
+     * Set code.
+     *
+     * @param string $code
+     * @return mixed
+     */
+    public function setCode(string $code);
+
+
+    /**
+     * Get id.
+     *
+     * @return int
+     */
+    public function getId(): int;
+
+
+    /**
+     * Get id default.
+     *
+     * @return string
+     */
+    public function getIdDefault(): string;
+
+
+    /**
+     * Get code default.
+     *
+     * @param bool $upper
+     * @return string
+     */
+    public function getCodeDefault(bool $upper = false): string;
+
+
+    /**
+     * Is default locale.
      *
      * @return bool
      */
-    public function isDefaultLocale();
+    public function isDefaultLocale(): bool;
 
 
     /**
-     * Get plural locale.
+     * Get plural.
      *
-     * @return mixed
+     * @return string
      */
-    public function getPlural();
+    public function getPlural(): string;
 
 
     /**
-     * Get id locale id by code locale.
+     * Get id by code.
      *
-     * @param $code
-     * @return mixed
+     * @param string $code
+     * @return int
      */
-    public function getIdByCode($code);
+    public function getIdByCode(string $code): int;
 }
