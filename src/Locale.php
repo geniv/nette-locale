@@ -18,11 +18,11 @@ abstract class Locale implements ILocale
     use SmartObject;
 
     /** @var array */
-    private $locales;
+    private $locales = [];
     /** @var array */
     private $aliasLocale;
     /** @var string */
-    private $defaultLocale;
+    private $defaultLocale = '';
     /** @var string */
     private $selectLocale;
 
@@ -54,7 +54,7 @@ abstract class Locale implements ILocale
     public function onRequest(Application $application, Request $request)
     {
         $params = $request->getParameters();
-        $this->setCode(isset($params['locale']) ? $params['locale'] : $this->defaultLocale);
+        $this->setCode($params['locale'] ?? $this->defaultLocale);
     }
 
 
@@ -128,8 +128,11 @@ abstract class Locale implements ILocale
     public function getCode(bool $upper = false): string
     {
         $this->checkLocale();
-        $code = $this->locales[$this->selectLocale]['code'];
-        return ($upper ? strtoupper($code) : $code);
+        if (isset($this->locales[$this->selectLocale]['code'])) {
+            $code = $this->locales[$this->selectLocale]['code'];
+            return ($upper ? strtoupper($code) : $code);
+        }
+        return '';
     }
 
 
@@ -155,7 +158,7 @@ abstract class Locale implements ILocale
      */
     public function getId(): int
     {
-        return $this->locales[$this->selectLocale]['id'];
+        return ($this->locales[$this->selectLocale]['id'] ?? 0);
     }
 
 
@@ -200,7 +203,7 @@ abstract class Locale implements ILocale
      */
     public function getPlural(): string
     {
-        return $this->locales[$this->selectLocale]['plural'];
+        return ($this->locales[$this->selectLocale]['plural'] ?? '');
     }
 
 
@@ -221,6 +224,6 @@ abstract class Locale implements ILocale
             $this->locales[$this->aliasLocale[$code]]['id'];
         }
         // jinak pouzije defaultni jazyk
-        return $this->locales[$this->defaultLocale]['id'];
+        return ($this->locales[$this->defaultLocale]['id'] ?? 0);
     }
 }
