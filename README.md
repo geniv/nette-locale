@@ -41,11 +41,11 @@ extensions:
 
 neon configure extension:
 ```neon
-# lokalizace
+# locale
 locale:
-#   debugger: false     # default true, disable tracy bar
-#   autowired: false    # default null, false => disable autowiring (in case multiple linked extension) | self
-#   onRequest: null     # default application.application, internal source current locale 
+#   debugger: true
+#   autowired: true
+#   onRequest: application.application
 #   driver: Locale\Drivers\DevNullDriver
 #   driver: Locale\Drivers\ArrayDriver
    driver: Locale\Drivers\DibiDriver(%tablePrefix%)
@@ -69,11 +69,11 @@ locale:
 
 ```php
 use Locale\Locale;
-$locale = $this->context->getByType(Locale::class);
+$locale = $this->context->getByType(ILocale::class);
 
 // or
 
-/** @var Locale\Locale @inject */
+/** @var Locale\ILocale @inject */
 public $locale;
 
 // methods:
