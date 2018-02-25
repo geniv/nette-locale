@@ -42,7 +42,7 @@ class ArrayDriver extends Locale
                     'id'     => $poc++,
                     'name'   => $row,
                     'code'   => $code,
-                    'plural' => $plurals && ($plurals[$code] ?? ''),
+                    'plural' => ($plurals[$code] ?? ''),
                 ];
             }, $locales);
             $cache->save('locales', $arrayLocales);  // cachovani bez expirace
