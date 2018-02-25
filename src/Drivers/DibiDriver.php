@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Locale\Drivers;
 
@@ -27,17 +27,17 @@ class DibiDriver extends Locale
     /**
      * DibiDriver constructor.
      *
-     * @param array      $parameters
+     * @param string     $prefix
      * @param Connection $connection
      * @param IStorage   $storage
      */
-    public function __construct(array $parameters, Connection $connection, IStorage $storage)
+    public function __construct(string $prefix, Connection $connection, IStorage $storage)
     {
         $cache = new Cache($storage, 'cache-LocaleDrivers-DibiDriver');
 
         // define table names
-        $tableLocale = $parameters['tablePrefix'] . self::TABLE_NAME;
-        $tableLocaleAlias = $parameters['tablePrefix'] . self::TABLE_NAME_ALIAS;
+        $tableLocale = $prefix . self::TABLE_NAME;
+        $tableLocaleAlias = $prefix . self::TABLE_NAME_ALIAS;
 
         // ulozeni locales do cache
         $locales = $cache->load('locales');
@@ -65,16 +65,16 @@ class DibiDriver extends Locale
         }
 
         // ulozeni a nacteni locale aliasu do cache
-        $localeAlias = $cache->load('localeAlias');
-        if ($localeAlias === null) {
+        $aliasLocale = $cache->load('aliasLocale');
+        if ($aliasLocale === null) {
             // nacitani aliasu
-            $localeAlias = $connection->select('a.alias, l.code')
+            $aliasLocale = $connection->select('a.alias, l.code')
                 ->from($tableLocaleAlias)->as('a')
                 ->join($tableLocale)->as('l')->on('l.id=a.id_locale')
                 ->fetchPairs('alias', 'code');
 
-            $cache->save('localeAlias', $localeAlias);  // cachovani bez expirace
+            $cache->save('aliasLocale', $aliasLocale);  // cachovani bez expirace
         }
-        parent::__construct($defaultLocale, $locales, $localeAlias);
+        parent::__construct($defaultLocale, $locales, $aliasLocale);
     }
 }

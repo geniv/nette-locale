@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Locale;
 
@@ -13,32 +13,32 @@ use Nette\SmartObject;
  * @author  geniv
  * @package Locale
  */
-class Locale implements ILocale
+abstract class Locale implements ILocale
 {
     use SmartObject;
 
-    /** @var array pole jazyku */
-    private $locales;
-    /** @var array jazykove aliasy */
+    /** @var array */
+    private $locales = [];
+    /** @var array */
     private $aliasLocale;
-    /** @var string vychozi jazyk */
-    private $defaultLocale;
-    /** @var string vybrany jazyk */
+    /** @var string */
+    private $defaultLocale = '';
+    /** @var string */
     private $selectLocale;
 
 
     /**
      * Locale constructor.
      *
-     * @param       $defaultLocale
-     * @param array $locales
-     * @param null  $localeAlias
+     * @param string $defaultLocale
+     * @param array  $locales
+     * @param array  $aliasLocale
      */
-    protected function __construct($defaultLocale, array $locales, $localeAlias = null)
+    protected function __construct(string $defaultLocale, array $locales, array $aliasLocale = [])
     {
         $this->defaultLocale = $defaultLocale;
         $this->locales = $locales;
-        $this->aliasLocale = $localeAlias;
+        $this->aliasLocale = $aliasLocale;
 
         // set default locale
         $this->selectLocale = $this->defaultLocale;
@@ -48,22 +48,22 @@ class Locale implements ILocale
     /**
      * Get current locale from HttpRequest.
      *
-     * @param Application $sender
+     * @param Application $application
      * @param Request     $request
      */
-    public function onRequest(Application $sender, Request $request)
+    public function onRequest(Application $application, Request $request)
     {
         $params = $request->getParameters();
-        $this->setCode(isset($params['locale']) ? $params['locale'] : $this->defaultLocale);
+        $this->setCode($params['locale'] ?? $this->defaultLocale);
     }
 
 
     /**
-     * Get list name locales.
+     * Get list name.
      *
      * @return array
      */
-    public function getListName()
+    public function getListName(): array
     {
         if ($this->locales) {
             return array_map(function ($item) {
@@ -75,11 +75,11 @@ class Locale implements ILocale
 
 
     /**
-     * Get list id locales.
+     * Get list id.
      *
      * @return array
      */
-    public function getListId()
+    public function getListId(): array
     {
         if ($this->locales) {
             return array_map(function ($item) {
@@ -91,11 +91,11 @@ class Locale implements ILocale
 
 
     /**
-     * Get list locales.
+     * Get locales.
      *
      * @return array
      */
-    public function getLocales()
+    public function getLocales(): array
     {
         return $this->locales;
     }
@@ -103,6 +103,8 @@ class Locale implements ILocale
 
     /**
      * Internal check current locale with apply alias.
+     *
+     * @internal
      */
     private function checkLocale()
     {
@@ -118,25 +120,29 @@ class Locale implements ILocale
 
 
     /**
-     * Get current code locale.
+     * Get code.
      *
      * @param bool $upper
-     * @return mixed
+     * @return string
      */
-    public function getCode($upper = false)
+    public function getCode(bool $upper = false): string
     {
         $this->checkLocale();
-        $code = $this->locales[$this->selectLocale]['code'];
-        return ($upper ? strtoupper($code) : $code);
+        if (isset($this->locales[$this->selectLocale]['code'])) {
+            $code = $this->locales[$this->selectLocale]['code'];
+            return ($upper ? strtoupper($code) : $code);
+        }
+        return '';
     }
 
 
     /**
-     * Set current code locale.
+     * Set code.
      *
-     * @param $code
+     * @param string $code
+     * @return mixed
      */
-    public function setCode($code)
+    public function setCode(string $code)
     {
         if ($code) {
             $this->selectLocale = strtolower($code);
@@ -146,68 +152,68 @@ class Locale implements ILocale
 
 
     /**
-     * Get current id locale.
+     * Get id.
      *
-     * @return mixed
+     * @return int
      */
-    public function getId()
+    public function getId(): int
     {
-        return $this->locales[$this->selectLocale]['id'];
+        return ($this->locales[$this->selectLocale]['id'] ?? 0);
     }
 
 
     /**
-     * Get default id locale.
+     * Get id default.
      *
-     * @return null
+     * @return string
      */
-    public function getIdDefault()
+    public function getIdDefault(): string
     {
-        return $this->locales[$this->defaultLocale]['id'];
+        return ($this->locales[$this->defaultLocale]['id'] ?? '');
     }
 
 
     /**
-     * Get default code locale.
+     * Get code default.
      *
      * @param bool $upper
      * @return string
      */
-    public function getCodeDefault($upper = false)
+    public function getCodeDefault(bool $upper = false): string
     {
         return ($upper ? strtoupper($this->defaultLocale) : $this->defaultLocale);
     }
 
 
     /**
-     * Is default locale?
+     * Is default locale.
      *
      * @return bool
      */
-    public function isDefaultLocale()
+    public function isDefaultLocale(): bool
     {
         return $this->getIdDefault() == $this->getId();
     }
 
 
     /**
-     * Get plural locale.
+     * Get plural.
      *
-     * @return mixed
+     * @return string
      */
-    public function getPlural()
+    public function getPlural(): string
     {
-        return $this->locales[$this->selectLocale]['plural'];
+        return ($this->locales[$this->selectLocale]['plural'] ?? '');
     }
 
 
     /**
-     * Get id locale id by code locale.
+     * Get id by code.
      *
-     * @param $code
-     * @return mixed
+     * @param string $code
+     * @return int
      */
-    public function getIdByCode($code)
+    public function getIdByCode(string $code): int
     {
         // pokud existuje kod v
         if (isset($this->locales[$code]['id'])) {
@@ -218,6 +224,6 @@ class Locale implements ILocale
             $this->locales[$this->aliasLocale[$code]]['id'];
         }
         // jinak pouzije defaultni jazyk
-        return $this->locales[$this->defaultLocale]['id'];
+        return ($this->locales[$this->defaultLocale]['id'] ?? 0);
     }
 }

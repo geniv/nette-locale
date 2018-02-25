@@ -20,7 +20,7 @@ or
 
 require:
 ```json
-"php": ">=5.6.0",
+"php": ">=7.0.0",
 "nette/nette": ">=2.4.0",
 "dibi/dibi": ">=3.0.0"
 ```
@@ -30,7 +30,7 @@ Include in application
 
 ### available source drivers:
 - Dibi (dibi + cache)
-- Array (filesystem)
+- Array (array configure)
 - DevNull (ignore locale)
 
 neon configure:
@@ -41,58 +41,63 @@ extensions:
 
 neon configure extension:
 ```neon
-# lokalizace
+# locale
 locale:
-#   debugger: false     # default true, disable tracy bar
-#   autowired: false    # default null, false => disable autowiring (in case multiple linked extension) | self
-#   onRequest: null     # default application.application, internal source current locale 
-#   source: "DevNull"
-    source: "Dibi"
-    tablePrefix: %tablePrefix%
-#   source: "Array"
-#   default: "cs"
-#   locales:
-#       cs: "Čeština"
-#       en: "English"
-#       de: "Deutsch"
-#   plurals:
-#       cs: "$nplurals=3; $plural=($n==1) ? 1 : (($n>=2 && $n<=4) ? 2 : 0);"
-#       en: "$nplurals=2; $plural=($n != 1) ? 0 : 1;"
-#       de: "$nplurals=2; $plural=($n != 1) ? 0 : 1;"
-#       ru: "$nplurals=3; $plural=($n%10==1 && $n%100!=11 ? 0 : $n%10>=2 && $n%10<=4 && ($n%100<10 || $n%100>=20) ? 1 : 2);"
-#   alias:
-#       sk: cs
-#       pl: en
+#   debugger: true
+#   autowired: true
+#   onRequest: application.application
+#   driver: Locale\Drivers\DevNullDriver
+#   driver: Locale\Drivers\ArrayDriver(%default%, %locales%, %plurals%, %alias%)
+    driver: Locale\Drivers\DibiDriver(%tablePrefix%)
 ```
 
+neon configure:
+```neon
+parameters:
+    default: "cs"
+    locales:
+       cs: "Čeština"
+       en: "English"
+       de: "Deutsch"
+    plurals:
+       cs: "$nplurals=3; $plural=($n==1) ? 1 : (($n>=2 && $n<=4) ? 2 : 0);"
+       en: "$nplurals=2; $plural=($n != 1) ? 0 : 1;"
+       de: "$nplurals=2; $plural=($n != 1) ? 0 : 1;"
+       ru: "$nplurals=3; $plural=($n%10==1 && $n%100!=11 ? 0 : $n%10>=2 && $n%10<=4 && ($n%100<10 || $n%100>=20) ? 1 : 2);"
+    alias:
+       sk: cs
+       pl: en
+```
+
+usage:
 ```php
 use Locale\Locale;
-$locale = $this->context->getByType(Locale::class);
+$locale = $this->context->getByType(ILocale::class);
 
 // or
 
-/** @var Locale\Locale @inject */
+/** @var Locale\ILocale @inject */
 public $locale;
 
-// methods:
-$locale->getListName() : array
-$locale->getListId() : array
-$locale->getLocales() : array
+// methods implements `ILocale`:
+getListName(): array;
+getListId(): array;
+getLocales(): array;
 
-$locale->getCode($upper) : string
-$locale->setCode($code) : void
+getCode(bool $upper = false): string
+setCode(string $code)
 
-$locale->getId() : int
-$locale->getIdDefault() : int
+getId(): int
+getIdDefault(): string
 
-$locale->getCodeDefault($upper) : string
-$locale->isDefaultLocale() : bool
-$locale->getPlural() : string
-$locale->getIdByCode($code) : string
+getCodeDefault(bool $upper = false): string
+isDefaultLocale(): bool
+getPlural(): string
+getIdByCode(string $code): int
 ```
 
 ### description
-`onRequest` is default in `Nette\Application\Application`:
+`onRequest` is default in `Nette\Application\Application` via `application.application`:
 ```php
 function onRequest(Application $sender, Request $request) {}
 ```
