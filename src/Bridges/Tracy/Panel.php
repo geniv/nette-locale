@@ -4,8 +4,6 @@ namespace Locale\Bridges\Tracy;
 
 use Latte\Engine;
 use Locale\ILocale;
-use Locale\Locale;
-use Nette\DI\Container;
 use Nette\SmartObject;
 use Tracy\Debugger;
 use Tracy\IBarPanel;
@@ -21,25 +19,12 @@ class Panel implements IBarPanel
 {
     use SmartObject;
 
-    /** @var ILocale locale from DI */
+    /** @var ILocale */
     private $locale;
-    /** @var Container container from DI */
-    private $container;
 
 
     /**
-     * Panel constructor.
-     *
-     * @param Container $container
-     */
-    public function __construct(Container $container)
-    {
-        $this->container = $container;
-    }
-
-
-    /**
-     * Register to Tracy.
+     * Register.
      *
      * @param ILocale $locale
      */
