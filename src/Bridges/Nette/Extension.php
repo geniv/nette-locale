@@ -54,7 +54,9 @@ class Extension extends CompilerExtension
         $config = $this->validateConfig($this->defaults);
 
         // linked onRequest
-        $builder->getDefinition($config['onRequest'])
-            ->addSetup('$service->onRequest[] = ?', [[$this->prefix('@default'), 'onRequest']]);
+        if ($config['onRequest']) {
+            $builder->getDefinition($config['onRequest'])
+                ->addSetup('$service->onRequest[] = ?', [[$this->prefix('@default'), 'onRequest']]);
+        }
     }
 }
