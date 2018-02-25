@@ -20,10 +20,6 @@ class Extension extends CompilerExtension
         'autowired' => true,
         'onRequest' => 'application.application',
         'driver'    => null,
-        //        'default'     => null,
-        //        'locales'     => [],
-        //        'plurals'     => [],
-        //        'alias'       => [],
     ];
 
 
