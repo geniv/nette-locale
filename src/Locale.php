@@ -165,11 +165,11 @@ abstract class Locale implements ILocale
     /**
      * Get id default.
      *
-     * @return string
+     * @return int
      */
-    public function getIdDefault(): string
+    public function getIdDefault(): int
     {
-        return ($this->locales[$this->defaultLocale]['id'] ?? '');
+        return ($this->locales[$this->defaultLocale]['id'] ?? 0);
     }
 
 
