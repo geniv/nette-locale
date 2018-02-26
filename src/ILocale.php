@@ -65,9 +65,9 @@ interface ILocale
     /**
      * Get id default.
      *
-     * @return string
+     * @return int
      */
-    public function getIdDefault(): string;
+    public function getIdDefault(): int;
 
 
     /**
