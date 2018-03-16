@@ -5,7 +5,7 @@ Plural forms documents: http://docs.translatehouse.org/projects/localization-gui
 
 In case new item must by added char `$` and add brackets `(`, `)`! Otherwise function `EVAL` has problem with correct evaluate plural form.
 
-It is recommended change sort plurals form number (eg: 0 => `0 oken, 5 oken`, 1 => `1 okno`, 2 => `2 okna, 3 okna`).
+It is recommended change position plurals index number (eg: 0 => `0 oken, 5 oken`, 1 => `1 okno`, 2 => `2 okna, 3 okna`).
 
 Installation
 ------------
@@ -98,6 +98,9 @@ getIdByCode(string $code): int
 
 ### description
 `onRequest` is default in `Nette\Application\Application` via `application.application`:
+
+via: _vendor/nette/application/src/Application/Application.php:41_ (Nette\Application\Application)
+
 ```php
-function onRequest(Application $sender, Request $request) {}
+public function onRequest(Application $application, Request $request) {}
 ```
