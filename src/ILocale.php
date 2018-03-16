@@ -2,6 +2,9 @@
 
 namespace Locale;
 
+use Nette\Application\Application;
+use Nette\Application\Request;
+
 
 /**
  * Interface ILocale
@@ -11,6 +14,22 @@ namespace Locale;
  */
 interface ILocale
 {
+
+    /**
+     * Get application.
+     *
+     * @return Application
+     */
+    public function getApplication(): Application;
+
+
+    /**
+     * Get request.
+     *
+     * @return Request
+     */
+    public function getRequest(): Request;
+
 
     /**
      * Get list name.
