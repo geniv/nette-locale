@@ -25,10 +25,6 @@ abstract class Locale implements ILocale
     private $defaultLocale = '';
     /** @var string */
     private $selectLocale;
-    /** @var Application */
-    private $application;
-    /** @var Request */
-    private $request;
 
 
     /**
@@ -57,33 +53,8 @@ abstract class Locale implements ILocale
      */
     public function onRequest(Application $application, Request $request)
     {
-        $this->application = $application;
-        $this->request = $request;
-
         $params = $request->getParameters();
         $this->setCode($params['locale'] ?? $this->defaultLocale);
-    }
-
-
-    /**
-     * Get application.
-     *
-     * @return Application
-     */
-    public function getApplication(): Application
-    {
-        return $this->application;
-    }
-
-
-    /**
-     * Get request.
-     *
-     * @return Request
-     */
-    public function getRequest(): Request
-    {
-        return $this->request;
     }
 
 

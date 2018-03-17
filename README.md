@@ -80,9 +80,6 @@ $locale = $this->context->getByType(ILocale::class);
 public $locale;
 
 // methods implements `ILocale`:
-getApplication(): Application;
-getRequest(): Request;
-
 getListName(): array;
 getListId(): array;
 getLocales(): array;
