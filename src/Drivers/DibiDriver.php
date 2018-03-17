@@ -20,8 +20,8 @@ class DibiDriver extends Locale
 {
     // define constant table names
     const
-        TABLE_NAME = 'locale',
-        TABLE_NAME_ALIAS = 'locale_alias';
+        TABLE = 'locale',
+        TABLE_ALIAS = 'locale_alias';
 
 
     /**
@@ -36,8 +36,8 @@ class DibiDriver extends Locale
         $cache = new Cache($storage, 'cache-LocaleDrivers-DibiDriver');
 
         // define table names
-        $tableLocale = $prefix . self::TABLE_NAME;
-        $tableLocaleAlias = $prefix . self::TABLE_NAME_ALIAS;
+        $tableLocale = $prefix . self::TABLE;
+        $tableLocaleAlias = $prefix . self::TABLE_ALIAS;
 
         // ulozeni locales do cache
         $locales = $cache->load('locales');
