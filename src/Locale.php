@@ -46,7 +46,7 @@ abstract class Locale implements ILocale
 
 
     /**
-     * Get current locale from HttpRequest.
+     * On request.
      *
      * @param Application $application
      * @param Request     $request
