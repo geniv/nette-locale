@@ -18,8 +18,20 @@ class DevNullDriver extends Locale
 
     /**
      * DevNullDriver constructor.
+     *
+     * @param int $defaultIdLocale
      */
-    public function __construct()
+    public function __construct(int $defaultIdLocale = 1)
     {
+        $defaultLocale = '';
+        $arrayLocales = [
+            $defaultLocale => [
+                'id'     => $defaultIdLocale,  // always define any integer ID!
+                'name'   => null,
+                'code'   => null,
+                'plural' => null,
+            ],
+        ];
+        parent::__construct($defaultLocale, $arrayLocales);
     }
 }
