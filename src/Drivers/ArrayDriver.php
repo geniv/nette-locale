@@ -26,6 +26,8 @@ class ArrayDriver extends Locale
      * @param array    $plurals
      * @param array    $aliasLocale
      * @param IStorage $storage
+     * @throws \Exception
+     * @throws \Throwable
      */
     public function __construct(string $defaultLocale, array $locales, array $plurals = [], array $aliasLocale = [], IStorage $storage)
     {

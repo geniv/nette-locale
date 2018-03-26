@@ -30,6 +30,8 @@ class DibiDriver extends Locale
      * @param string     $prefix
      * @param Connection $connection
      * @param IStorage   $storage
+     * @throws \Exception
+     * @throws \Throwable
      */
     public function __construct(string $prefix, Connection $connection, IStorage $storage)
     {

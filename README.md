@@ -46,7 +46,7 @@ locale:
 #   debugger: true
 #   autowired: true
 #   onRequest: application.application
-#   driver: Locale\Drivers\DevNullDriver
+#   driver: Locale\Drivers\DevNullDriver(1)
 #   driver: Locale\Drivers\ArrayDriver(%default%, %locales%, %plurals%, %alias%)
     driver: Locale\Drivers\DibiDriver(%tablePrefix%)
 ```
