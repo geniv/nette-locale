@@ -32,14 +32,14 @@ class Extension extends CompilerExtension
         $config = $this->validateConfig($this->defaults);
 
         // define driver
-        $builder->addDefinition($this->prefix('default'))
+        $default = $builder->addDefinition($this->prefix('default'))
             ->setFactory($config['driver'])
             ->setAutowired($config['autowired']);
 
         // define panel
         if ($config['debugger']) {
             $panel = $builder->addDefinition($this->prefix('panel'))
-                ->setFactory(Panel::class);
+                ->setFactory(Panel::class, [$default]);
 
             // linked panel to tracy
             $builder->getDefinition('tracy.bar')
