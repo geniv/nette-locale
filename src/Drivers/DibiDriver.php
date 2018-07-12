@@ -35,7 +35,7 @@ class DibiDriver extends Locale
      */
     public function __construct(string $prefix, Connection $connection, IStorage $storage)
     {
-        $cache = new Cache($storage, 'cache-LocaleDrivers-DibiDriver');
+        $cache = new Cache($storage, 'Locale-Drivers-DibiDriver');
 
         // define table names
         $tableLocale = $prefix . self::TABLE;
