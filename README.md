@@ -87,6 +87,9 @@ getLocales(): array;
 getCode(bool $upper = false): string
 setCode(string $code)
 
+// is correct locale set? with method: setCode()
+isReady(): bool
+
 getId(): int
 getIdDefault(): string
 
