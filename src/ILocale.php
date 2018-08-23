@@ -58,6 +58,14 @@ interface ILocale
 
 
     /**
+     * Is ready.
+     *
+     * @return bool
+     */
+    public function isReady(): bool;
+
+
+    /**
      * Get id.
      *
      * @return int

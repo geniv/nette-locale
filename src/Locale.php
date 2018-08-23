@@ -25,6 +25,8 @@ abstract class Locale implements ILocale
     private $defaultLocale = '';
     /** @var string */
     private $selectLocale;
+    /** @var bool */
+    private $ready = false;
 
 
     /**
@@ -146,8 +148,19 @@ abstract class Locale implements ILocale
     {
         if ($code) {
             $this->selectLocale = strtolower($code);
+            $this->ready = true;    // set ready for use locale
             $this->checkLocale();
         }
+//        \Tracy\Debugger::fireLog('setCode: ' . $code);
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function isReady(): bool
+    {
+        return $this->ready;
     }
 
 
@@ -158,6 +171,7 @@ abstract class Locale implements ILocale
      */
     public function getId(): int
     {
+//        \Tracy\Debugger::fireLog('getId: ' . $this->selectLocale);
         return ($this->locales[$this->selectLocale]['id'] ?? 0);
     }
 
