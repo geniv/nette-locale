@@ -31,7 +31,7 @@ class ArrayDriver extends Locale
      */
     public function __construct(string $defaultLocale, array $locales, array $plurals = [], array $aliasLocale = [], IStorage $storage)
     {
-        $cache = new Cache($storage, 'cache-LocaleDrivers-ArrayDriver');
+        $cache = new Cache($storage, 'Locale-Drivers-ArrayDriver');
         // save locales to cache
         $arrayLocales = $cache->load('locales');
         if ($arrayLocales === null) {
