@@ -88,6 +88,7 @@ getCode(bool $upper = false): string
 setCode(string $code)
 
 // is correct locale set? with method: setCode()
+// true if driver is DevNullDriver
 isReady(): bool
 
 getId(): int
