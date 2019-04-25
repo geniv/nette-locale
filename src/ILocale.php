@@ -52,7 +52,6 @@ interface ILocale
      * Set code.
      *
      * @param string $code
-     * @return mixed
      */
     public function setCode(string $code);
 

@@ -1,7 +1,7 @@
 <h1>{$class}</h1>
 <div class="tracy-inner">
-    <p n:if="!$locales">No locale</p>
-    <table n:ifset="$locales">
+    <p n:ifset="$locales['']">No locale</p>
+    <table n:if="!isset($locales[''])">
         <tr>
             <th>Id</th>
             <th>Code</th>

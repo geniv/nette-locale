@@ -2,6 +2,7 @@
 
 namespace Locale;
 
+use Locale\Drivers\DevNullDriver;
 use Nette\Application\Application;
 use Nette\Application\Request;
 use Nette\SmartObject;
@@ -142,7 +143,6 @@ abstract class Locale implements ILocale
      * Set code.
      *
      * @param string $code
-     * @return mixed
      */
     public function setCode(string $code)
     {
@@ -160,7 +160,8 @@ abstract class Locale implements ILocale
      */
     public function isReady(): bool
     {
-        return $this->ready;
+        // in case this instance is DevNullDriver then ignore standard ready
+        return ($this instanceof DevNullDriver) ?: $this->ready;
     }
 
 

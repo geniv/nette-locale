@@ -46,7 +46,7 @@ locale:
 #   debugger: true
 #   autowired: true
 #   onRequest: application.application
-#   driver: Locale\Drivers\DevNullDriver(1)
+#   driver: Locale\Drivers\DevNullDriver
 #   driver: Locale\Drivers\ArrayDriver(%default%, %locales%, %plurals%, %alias%)
     driver: Locale\Drivers\DibiDriver(%tablePrefix%)
 ```
@@ -88,6 +88,7 @@ getCode(bool $upper = false): string
 setCode(string $code)
 
 // is correct locale set? with method: setCode()
+// true if driver is DevNullDriver
 isReady(): bool
 
 getId(): int
