@@ -2,9 +2,6 @@
 
 namespace Locale;
 
-use Nette\Application\Application;
-use Nette\Application\Request;
-
 
 /**
  * Interface ILocale

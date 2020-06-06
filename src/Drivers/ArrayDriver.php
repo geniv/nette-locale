@@ -2,9 +2,11 @@
 
 namespace Locale\Drivers;
 
+use Exception;
 use Locale\Locale;
 use Nette\Caching\Cache;
 use Nette\Caching\IStorage;
+use Throwable;
 
 
 /**
@@ -26,8 +28,9 @@ class ArrayDriver extends Locale
      * @param array    $plurals
      * @param array    $aliasLocale
      * @param IStorage $storage
-     * @throws \Exception
-     * @throws \Throwable
+     * @throws Exception
+     * @throws Throwable
+     * @noinspection PhpOptionalBeforeRequiredParametersInspection
      */
     public function __construct(string $defaultLocale, array $locales, array $plurals = [], array $aliasLocale = [], IStorage $storage)
     {

@@ -15,14 +15,19 @@ $ composer require geniv/nette-locale
 ```
 or
 ```json
-"geniv/nette-locale": ">=1.0.0"
+"geniv/nette-locale": "^2.0"
 ```
 
 require:
 ```json
-"php": ">=7.0.0",
-"nette/nette": ">=2.4.0",
-"dibi/dibi": ">=3.0.0"
+"php": ">=7.0",
+"nette/application": ">=2.4",
+"nette/caching": ">=2.5",
+"nette/di": ">=2.4",
+"nette/utils": ">=2.4",
+"latte/latte": ">=2.4",
+"tracy/tracy": ">=2.4",
+"dibi/dibi": ">=3.0"
 ```
 
 Include in application

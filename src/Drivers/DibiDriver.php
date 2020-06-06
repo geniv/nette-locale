@@ -2,10 +2,12 @@
 
 namespace Locale\Drivers;
 
-use Locale\Locale;
 use Dibi\Connection;
+use Exception;
+use Locale\Locale;
 use Nette\Caching\Cache;
 use Nette\Caching\IStorage;
+use Throwable;
 
 
 /**
@@ -30,8 +32,8 @@ class DibiDriver extends Locale
      * @param string     $prefix
      * @param Connection $connection
      * @param IStorage   $storage
-     * @throws \Exception
-     * @throws \Throwable
+     * @throws Exception
+     * @throws Throwable
      */
     public function __construct(string $prefix, Connection $connection, IStorage $storage)
     {
@@ -45,6 +47,7 @@ class DibiDriver extends Locale
         $locales = $cache->load('locales');
         if ($locales === null) {
             // nacteni vsech jazyku do pole
+            /** @noinspection PhpUndefinedMethodInspection */
             $locales = $connection->select('id, code, name, plural, main')
                 ->from($tableLocale)
                 ->where(['active' => true])

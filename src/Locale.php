@@ -19,11 +19,11 @@ abstract class Locale implements ILocale
     use SmartObject;
 
     /** @var array */
-    private $locales = [];
+    private $locales;
     /** @var array */
     private $aliasLocale;
     /** @var string */
-    private $defaultLocale = '';
+    private $defaultLocale;
     /** @var string */
     private $selectLocale;
     /** @var bool */
@@ -53,6 +53,8 @@ abstract class Locale implements ILocale
      *
      * @param Application $application
      * @param Request     $request
+     * @noinspection PhpUnused
+     * @noinspection PhpUnusedParameterInspection
      */
     public function onRequest(Application $application, Request $request)
     {
